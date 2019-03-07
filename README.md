@@ -8,9 +8,9 @@ Setting up the project:
 1. Clone the repository. git clone https://github.com/AparnaPrasad/bike-networks.git
 2. npm i
 3. npm start
-4. to run tests npm test
+4. to run tests: npm test
 
-Use the latest version of Node. Tested with 6 and above.
+Use the latest version of Node. Tested with 10.
 
 This project uses :
 1. React/Redux for frontend
