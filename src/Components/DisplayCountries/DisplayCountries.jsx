@@ -16,7 +16,7 @@ class DisplayCountries extends Component {
 
 }
 
-function mapStateToProps({bikes, city, country}) {
+function mapStateToProps({country}) {
     return {
         countryList: country.countryList
     }

@@ -1,6 +1,6 @@
 import ListBikes from '../src/Components/ListBikes/ListBikes';
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 
 const sample_data = [{
     "company": [
@@ -45,21 +45,40 @@ const sample_data = [{
     "name": "Fächerrad"
 }];
 
-const setDataMock = () => {};
-const setShow = () => {};
-
 describe('ListBikes', () => {
-  test('should display all bike networks', () => {     
-    const wrapper = shallow(<ListBikes items={sample_data}/>);
-    //console.log("Wrapper find",wrapper.find('tr.bike-networks'));
-    expect(wrapper.find('tr.bike-networks')).toHaveLength(sample_data.length);
-  });
-  test('clicking on a network calls rowClicked', () => {
-    const wrapper = shallow(<ListBikes items={sample_data} setShow={setShow} setData={setDataMock}/> );
-    wrapper.find('tr.bike-networks').first().simulate('click');
-    await Promise.resolve();
-    //expect(wrapper.find('tr.bike-networks')).toHaveLength(sample_data.length);
-  })
+
+    let wrapper, setHrefMock, setShowMock;
+    
+    beforeEach(() => {
+        setHrefMock = jest.fn();
+        setShowMock = jest.fn();
+        wrapper = shallow(<ListBikes items={sample_data} setShow={setShowMock} setHref={setHrefMock}/>);
+    });
+
+    test('should display all bike networks', () => {     
+        expect(wrapper.find('tr.bike-networks')).toHaveLength(sample_data.length);
+    });
+
+    test('row should display correct data', () => {
+        const firstRowColumns = wrapper.find('tr.bike-networks').at(0).find('td').map(column => column.text());
+        expect(firstRowColumns.length).toBe(4);
+        expect(firstRowColumns[0]).toBe(sample_data[0].id);
+        expect(firstRowColumns[1]).toBe(sample_data[0].name);
+        expect(firstRowColumns[2]).toBe(sample_data[0].location.city);
+        expect(firstRowColumns[3]).toBe(sample_data[0].location.country);
+    });
+
+    test('clicking on a network row calls setHref', async () => {       
+        const row = wrapper.find('tr.bike-networks').at(1);
+        row.simulate('click');
+        await expect(setHrefMock).toHaveBeenCalled();
+    });
+
+    test('clicking on a network row calls setShow', async () => {       
+        const row = wrapper.find('tr.bike-networks').at(1);
+        row.simulate('click');
+        await expect(setShowMock).toHaveBeenCalled();
+    });
 
 });
 

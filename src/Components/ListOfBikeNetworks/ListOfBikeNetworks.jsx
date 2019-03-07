@@ -3,35 +3,20 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button';
 import ListBikes from '../ListBikes/ListBikes';
 import Loader from 'react-loaders';
-import Table from "react-bootstrap/Table";
-
+import Api from '../../Utils/api';
 
 function ListOfBikeNetworks(props) {
         const [show, setShow] = useState(false);
         const [data, setData] = useState([]);
+        const [href, setHref] = useState();
 
-        const getDisplayedData = (data) => {
-            return (
-                <div>
-                    <h3>{data.name}</h3>
-                    <Table bordered hover>
-                        <thead>
-                        <tr className='table-header'>
-                            <th>Empty slots</th>
-                            <th>Free bikes</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            {data.stations.map((station, index)=>
-                                <tr key={index}>
-                                    <td>{station.empty_slots}</td>
-                                    <td>{station.free_bikes}</td>
-                                </tr>)}
-                        </tbody>
-                    </Table>
-                </div>
-            )
-        }
+        useEffect(() => {
+            if(show && href) {
+                Api.get(`${href}`).then(response => {                   
+                    setData(response.data);
+                })
+            }
+        })
 
         return (<div>
 
@@ -40,7 +25,7 @@ function ListOfBikeNetworks(props) {
                     <Modal.Title>Network Details</Modal.Title>
                 </Modal.Header>
                 {data && data.network ?
-                    <Modal.Body>{ getDisplayedData(data.network) } </Modal.Body> :
+                    <Modal.Body>{ props.getDisplayedData(data.network) } </Modal.Body> :
                     <div>Loading...<Loader type="line-scale" active /></div>}
                 <Modal.Footer>
                     <Button variant="secondary" onClick={()=>setShow(false)}>
@@ -48,7 +33,7 @@ function ListOfBikeNetworks(props) {
                     </Button>
                 </Modal.Footer>
             </Modal>
-            <ListBikes items={props.items} setShow={setShow} setData={setData} />
+            <ListBikes items={props.items} setShow={setShow} setHref={setHref} rowClicked={props.rowClicked} />
         </div>)
 
 }

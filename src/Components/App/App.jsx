@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import './app.scss';
-//import Loader from 'react-loader-spinner';
-import Api from '../../Utils/api';
 import { connect } from 'react-redux';
 import { fetchBikesNetwork } from '../../Actions/bikes';
 import DisplayGroupedBikeNetworks from '../DisplayGroupedBikeNetworks/DisplayGroupedBikeNetworks';
