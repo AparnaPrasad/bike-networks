@@ -44,7 +44,7 @@ class App extends Component {
     render() {
        return (
             <div>
-                <h1>Bike network</h1>
+                <h1>Bike networks</h1>
                 <DropdownContainer
                     groupBy={ this.state.groupBy }
                     dropDownChange={ this.dropDownChange.bind(this) }/>

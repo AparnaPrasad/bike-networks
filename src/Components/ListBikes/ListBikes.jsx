@@ -25,7 +25,7 @@ export default function ListBikes(props){
         </thead>
             <tbody>
                 {props.items.map((item, index)=>{
-                return <tr key={index} onClick={(e)=>rowClicked(e, item.href)}>
+                return <tr key={index} className='bike-networks' onClick={(e)=>rowClicked(e, item.href)}>
                     {table_fields_keys.map((field, index)=>(
                       <td key={index}>{(field === table_fields.city || field===table_fields.country) ? (item.location?item.location[field]:undefined): item[field] }</td>
                     ))}
