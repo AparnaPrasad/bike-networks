@@ -36,6 +36,7 @@ export function fetchBikesNetwork() {
         });
     };
 
+    //If API does'nt return the data, uncomment this
     /* return (dispatch) => {
         dispatch(fetchBikesBegin());
         setTimeout(() => {
