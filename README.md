@@ -24,3 +24,4 @@ Possible Improvements:
 1. Styling can be imporoved.
 2. Need to fix linting errors.
 
+If there are problems reaching API, uncomment line 40-48 and comment line 24-37 in src/Actions/bikes.js to get sample data for the  application
